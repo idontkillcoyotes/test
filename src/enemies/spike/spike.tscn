@@ -1,0 +1,199 @@
+[gd_scene format=3 uid="uid://gahhg4e1yc52"]
+
+[ext_resource type="Texture2D" uid="uid://uri5dsdilxgb" path="res://assets/Terrain/Decorations/Rubber Duck/Rubber duck.png" id="1_120uw"]
+[ext_resource type="Script" uid="uid://45aok5r8kkmp" path="res://src/enemies/spike/spike.gd" id="1_eb1c2"]
+[ext_resource type="PackedScene" uid="uid://dlb01cuqpshs2" path="res://src/components/hitbox/hitbox_component.tscn" id="2_x8f56"]
+[ext_resource type="PackedScene" uid="uid://1t5oa8vkjxqk" path="res://src/components/health/health_bar_component.tscn" id="3_23y6f"]
+[ext_resource type="PackedScene" uid="uid://17asjbeu2pn8" path="res://src/components/health/health_component.tscn" id="3_oo71e"]
+[ext_resource type="PackedScene" uid="uid://p1aghkudiqbm" path="res://src/components/hurtbox/hurtbox_component.tscn" id="3_x8f56"]
+[ext_resource type="PackedScene" uid="uid://hjumt43t3l4h" path="res://src/components/weapons/contact_weapon.tscn" id="4_0wk1f"]
+[ext_resource type="Shader" uid="uid://dq8afck7uqhxm" path="res://assets/Shaders/flash_sprite.gdshader" id="7_5wesu"]
+[ext_resource type="Script" uid="uid://cgimfqr2byv2w" path="res://src/state_machine/state_machine.gd" id="8_23y6f"]
+[ext_resource type="Script" uid="uid://cd345au5we3sy" path="res://src/utils/sprite_material.gd" id="9_43rgw"]
+[ext_resource type="Script" uid="uid://cfvlsseguxxgv" path="res://src/enemies/spike/states/idle.gd" id="9_shqrt"]
+[ext_resource type="Script" uid="uid://dnpyc2jh4aqa6" path="res://src/enemies/spike/hit.gd" id="10_vk5yh"]
+[ext_resource type="PackedScene" uid="uid://d218jmplpk65g" path="res://src/components/knockback/knockback_component.tscn" id="13_fgsy3"]
+
+[sub_resource type="Animation" id="Animation_l0n4b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/flash_mix")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_43rgw"]
+resource_name = "hit"
+length = 0.25000834
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:material:shader_parameter/flash_mix")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 0.50000002375, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vk5yh"]
+resource_name = "idle"
+length = 0.25000834
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5wesu"]
+_data = {
+&"RESET": SubResource("Animation_l0n4b"),
+&"hit": SubResource("Animation_43rgw"),
+&"idle": SubResource("Animation_vk5yh")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_shqrt"]
+radius = 18.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wk1f"]
+radius = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8f56"]
+radius = 34.0147
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fgsy3"]
+shader = ExtResource("7_5wesu")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_mix = 0.0
+shader_parameter/alpha = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43rgw"]
+atlas = ExtResource("1_120uw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgsy3"]
+atlas = ExtResource("1_120uw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y367m"]
+atlas = ExtResource("1_120uw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6qdoh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43rgw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgsy3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y367m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Spike" type="CharacterBody2D" unique_id=1599811288]
+script = ExtResource("1_eb1c2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=351521462]
+libraries/ = SubResource("AnimationLibrary_5wesu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1501415559]
+shape = SubResource("CircleShape2D_shqrt")
+
+[node name="HealthBarComponent" parent="." unique_id=370671312 node_paths=PackedStringArray("health_component") instance=ExtResource("3_23y6f")]
+offset_left = -41.0
+offset_top = -51.0
+offset_right = 39.0
+offset_bottom = -41.0
+health_component = NodePath("../HealthComponent")
+
+[node name="HealthComponent" parent="." unique_id=1686344597 instance=ExtResource("3_oo71e")]
+max_health = 20
+
+[node name="HitboxComponent" parent="." unique_id=1932622069 instance=ExtResource("2_x8f56")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent" unique_id=1116178475]
+shape = SubResource("CircleShape2D_0wk1f")
+
+[node name="HurtboxComponent" parent="." unique_id=651161406 node_paths=PackedStringArray("health_component") instance=ExtResource("3_x8f56")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=2012488090]
+shape = SubResource("CircleShape2D_x8f56")
+debug_color = Color(0.9468067, 4.1392445e-06, 0.58838475, 0.41960785)
+
+[node name="ContactWeapon" parent="." unique_id=1121518544 node_paths=PackedStringArray("hitbox") instance=ExtResource("4_0wk1f")]
+hitbox = NodePath("../HitboxComponent")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=629725955]
+material = SubResource("ShaderMaterial_fgsy3")
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_6qdoh")
+script = ExtResource("9_43rgw")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1212018164 node_paths=PackedStringArray("character", "animator", "initial_state")]
+script = ExtResource("8_23y6f")
+character = NodePath("..")
+animator = NodePath("../AnimationPlayer")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1093847608]
+script = ExtResource("9_shqrt")
+
+[node name="Hit" type="Node" parent="StateMachine" unique_id=1303413353]
+script = ExtResource("10_vk5yh")
+
+[node name="KnockbackComponent" parent="." unique_id=1561047996 node_paths=PackedStringArray("character", "hurtbox") instance=ExtResource("13_fgsy3")]
+character = NodePath("..")
+hurtbox = NodePath("../HurtboxComponent")
+
+[connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
+[connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://hjumt43t3l4h"]
+
+[ext_resource type="Script" uid="uid://b3hh4iv7627rd" path="res://src/components/weapons/contact_weapon.gd" id="1_2wv6w"]
+
+[node name="ContactWeapon" type="Node2D" unique_id=1121518544 node_paths=PackedStringArray("hitbox")]
+script = ExtResource("1_2wv6w")
+hitbox = NodePath("")

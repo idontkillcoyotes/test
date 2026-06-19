@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d218jmplpk65g"]
+
+[ext_resource type="Script" uid="uid://c2ln6sues4vw8" path="res://src/components/knockback/knockback_component.gd" id="1_g1tn7"]
+
+[node name="KnockbackComponent" type="Node" unique_id=1561047996 node_paths=PackedStringArray("character", "hurtbox")]
+script = ExtResource("1_g1tn7")
+character = NodePath("")
+hurtbox = NodePath("")

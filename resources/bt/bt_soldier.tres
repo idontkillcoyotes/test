@@ -1,0 +1,37 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://dha70bu4fq4ka"]
+
+[ext_resource type="Script" uid="uid://bdd7nk80ytoj1" path="res://src/ai/tasks/bt_is_player_in_attack_range.gd" id="1_jg5lr"]
+[ext_resource type="Script" uid="uid://c652wqa0u14cx" path="res://src/ai/tasks/bt_is_player_detected.gd" id="2_54x0s"]
+[ext_resource type="Script" uid="uid://dg2hbnyxrhi74" path="res://src/ai/tasks/bt_move_to_player.gd" id="3_eo6s2"]
+[ext_resource type="Script" uid="uid://bcepcmvgc56sm" path="res://src/ai/tasks/bt_patrol.gd" id="4_ywwct"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_4k5ib"]
+
+[sub_resource type="BTCondition" id="BTCondition_1ukic"]
+script = ExtResource("1_jg5lr")
+
+[sub_resource type="BTSequence" id="BTSequence_767nb"]
+children = [SubResource("BTCondition_1ukic")]
+
+[sub_resource type="BTCondition" id="BTCondition_anufv"]
+script = ExtResource("2_54x0s")
+
+[sub_resource type="BTAction" id="BTAction_677xh"]
+script = ExtResource("3_eo6s2")
+
+[sub_resource type="BTSequence" id="BTSequence_y50i8"]
+children = [SubResource("BTCondition_anufv"), SubResource("BTAction_677xh")]
+
+[sub_resource type="BTAction" id="BTAction_172rs"]
+script = ExtResource("4_ywwct")
+
+[sub_resource type="BTSelector" id="BTSelector_o64m7"]
+children = [SubResource("BTSequence_767nb"), SubResource("BTSequence_y50i8"), SubResource("BTAction_172rs")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_2g4bp"]
+forever = true
+children = [SubResource("BTSelector_o64m7")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_4k5ib")
+root_task = SubResource("BTRepeat_2g4bp")
