@@ -6,9 +6,11 @@ extends Node
 @export var initial_state : State
 
 @export_group("DEBUG")
-@export var print_debug : bool = false
+@export var _print_debug : bool = false
 
 var current_state : State
+
+var active : bool = true
 
 func _ready() -> void:
 	for child in get_children():
@@ -30,14 +32,16 @@ func transition_to(new_state:String) -> void:
 	if next_state == current_state:
 		return
 	
-	if print_debug:
+	if _print_debug:
 		print(current_state.name," -> ",next_state.name)
 	current_state.exit()
 	current_state = next_state
 	current_state.enter()
 
 func _physics_process(delta: float) -> void:
-	current_state.update(delta)
+	if active:
+		current_state.update(delta)
 
 func _input(event: InputEvent) -> void:
-	current_state.handle_input(event)
+	if active:
+		current_state.handle_input(event)

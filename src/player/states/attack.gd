@@ -10,7 +10,7 @@ func enter() -> void:
 	pressed_attack = false
 	animator.play("attack")
 
-func _on_animation_finished(anim_name:String) -> void:
+func _on_animation_finished(_anim_name:String) -> void:
 	if pressed_attack:
 		sm.transition_to("Attack2")
 	else:

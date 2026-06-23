@@ -7,6 +7,8 @@ func enter() -> void:
 func handle_input(event:InputEvent) -> void:
 	if event.is_action_pressed("player_attack"):
 		sm.transition_to("Attack")
+	if event.is_action_pressed("player_guard"):
+		sm.transition_to("Guard")
 
 func update(_delta:float) -> void:
 	var direction := Vector2(

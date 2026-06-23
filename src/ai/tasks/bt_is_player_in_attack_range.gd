@@ -7,8 +7,10 @@ func _tick(_delta: float) -> Status:
 	if enemy.player == null:
 		return FAILURE
 	
-	var distance: float = enemy.global_position.distance_to(enemy.player.global_position)
+	if enemy.player.is_dead:
+		return FAILURE
 	
+	var distance: float = enemy.global_position.distance_to(enemy.player.global_position)
 	if distance <= enemy.attack_range:
 		return SUCCESS
 	else:

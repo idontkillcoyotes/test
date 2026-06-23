@@ -12,13 +12,16 @@
 [ext_resource type="Script" uid="uid://cane7wkc06a07" path="res://src/player/states/idle.gd" id="6_jiejy"]
 [ext_resource type="Script" uid="uid://bil2c1c4adkdb" path="res://src/player/states/run.gd" id="7_o822w"]
 [ext_resource type="Texture2D" uid="uid://dcf82whyj8qnu" path="res://assets/Units/Black Units/Warrior/Warrior_Attack2.png" id="7_oyld2"]
-[ext_resource type="Script" uid="uid://dqgixuynohhi6" path="res://src/player/weapon.gd" id="8_wlj80"]
+[ext_resource type="Script" uid="uid://dqgixuynohhi6" path="res://src/components/weapons/weapon.gd" id="8_wlj80"]
 [ext_resource type="Script" uid="uid://bwl3o3gb185ko" path="res://src/player/states/attack.gd" id="8_x42xx"]
+[ext_resource type="Texture2D" uid="uid://dlqpf2jhdc1v8" path="res://assets/Units/Black Units/Warrior/Warrior_Guard.png" id="9_5shm8"]
 [ext_resource type="Script" uid="uid://0sfwq3uhxk4n" path="res://src/player/states/hit.gd" id="10_8ydov"]
 [ext_resource type="PackedScene" uid="uid://p1aghkudiqbm" path="res://src/components/hurtbox/hurtbox_component.tscn" id="11_cwolq"]
+[ext_resource type="Script" uid="uid://c5lltj1ln8lf0" path="res://src/player/camera.gd" id="11_jcdrv"]
 [ext_resource type="PackedScene" uid="uid://dlb01cuqpshs2" path="res://src/components/hitbox/hitbox_component.tscn" id="12_2smqc"]
 [ext_resource type="Script" uid="uid://doaqjy408qu74" path="res://src/player/states/dead.gd" id="13_2smqc"]
 [ext_resource type="Script" uid="uid://cuc2rfjp046vn" path="res://src/player/states/attack_2.gd" id="16_vwsmr"]
+[ext_resource type="Script" uid="uid://bldb63sgjejlc" path="res://src/player/states/guard.gd" id="22_5efpn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vwi60"]
 radius = 18.0
@@ -101,6 +104,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../HurtboxComponent/CollisionShape2D:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_244u8"]
@@ -262,6 +277,48 @@ tracks/3/keys = {
 "values": [Color(1, 0, 0, 1), Color(0.2859967, 2.5870278e-07, 1.2032687e-07, 1), Color(0, 0, 0, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_4uy46"]
+resource_name = "guard"
+length = 0.50000834
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"guard"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../HurtboxComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_ylhto"]
 resource_name = "hit"
 length = 0.3333417
@@ -332,6 +389,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../HurtboxComponent/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_5f2sf"]
 resource_name = "run"
@@ -369,6 +438,7 @@ _data = {
 &"attack": SubResource("Animation_244u8"),
 &"attack2": SubResource("Animation_jcdrv"),
 &"dead": SubResource("Animation_6bm8s"),
+&"guard": SubResource("Animation_4uy46"),
 &"hit": SubResource("Animation_ylhto"),
 &"idle": SubResource("Animation_jiejy"),
 &"run": SubResource("Animation_5f2sf")
@@ -411,6 +481,30 @@ region = Rect2(384, 0, 192, 192)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j2873"]
 atlas = ExtResource("7_oyld2")
 region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dpt0q"]
+atlas = ExtResource("9_5shm8")
+region = Rect2(0, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wcxbk"]
+atlas = ExtResource("9_5shm8")
+region = Rect2(192, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6grl"]
+atlas = ExtResource("9_5shm8")
+region = Rect2(384, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e7e1q"]
+atlas = ExtResource("9_5shm8")
+region = Rect2(576, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmpm3"]
+atlas = ExtResource("9_5shm8")
+region = Rect2(768, 0, 192, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h0enb"]
+atlas = ExtResource("9_5shm8")
+region = Rect2(960, 0, 192, 192)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cwolq"]
 atlas = ExtResource("2_244u8")
@@ -501,6 +595,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_dpt0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wcxbk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6grl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e7e1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmpm3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h0enb")
+}],
+"loop": true,
+"name": &"guard",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_cwolq")
 }, {
 "duration": 1.0,
@@ -570,7 +687,7 @@ health_component = NodePath("../HealthComponent")
 [node name="KnockbackComponent" parent="." unique_id=1561047996 node_paths=PackedStringArray("character", "hurtbox") instance=ExtResource("3_vwsmr")]
 character = NodePath("..")
 hurtbox = NodePath("../HurtboxComponent")
-decay = 350.0
+decay = 380.0
 
 [node name="HealthComponent" parent="." unique_id=1686344597 instance=ExtResource("2_ylhto")]
 
@@ -586,11 +703,13 @@ health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent" unique_id=2003758846]
 shape = SubResource("CapsuleShape2D_rl62b")
+disabled = true
 debug_color = Color(0.9580465, 0, 0.5319091, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=56486852]
 root_node = NodePath("../CollisionShape2D")
 libraries/ = SubResource("AnimationLibrary_o822w")
+autoplay = &"RESET"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=762197910]
 material = SubResource("ShaderMaterial_wlj80")
@@ -600,10 +719,12 @@ animation = &"idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1738227999]
 position_smoothing_enabled = true
+script = ExtResource("11_jcdrv")
 
 [node name="Weapon" type="Node2D" parent="." unique_id=306003372 node_paths=PackedStringArray("hitbox")]
 position = Vector2(0, -33)
 script = ExtResource("8_wlj80")
+knockback_force = 50.0
 hitbox = NodePath("HitboxComponent")
 
 [node name="HitboxComponent" parent="Weapon" unique_id=1932622069 instance=ExtResource("12_2smqc")]
@@ -640,6 +761,9 @@ script = ExtResource("10_8ydov")
 
 [node name="Dead" type="Node" parent="StateMachine" unique_id=491940035]
 script = ExtResource("13_2smqc")
+
+[node name="Guard" type="Node" parent="StateMachine" unique_id=168761280]
+script = ExtResource("22_5efpn")
 
 [connection signal="health_changed" from="HealthComponent" to="." method="_on_health_component_health_changed"]
 [connection signal="health_depleted" from="HealthComponent" to="." method="_on_health_component_health_depleted"]

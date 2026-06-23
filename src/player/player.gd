@@ -7,6 +7,9 @@ signal died
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var weapon: Node2D = $Weapon
 @onready var state_machine: StateMachine = $StateMachine
+@onready var camera: Camera2D = $Camera2D
+
+var is_dead : bool = false
 
 func _process(_delta: float) -> void:
 	if velocity.x < 0:
@@ -24,3 +27,5 @@ func _on_health_component_health_changed(new_value: int) -> void:
 func _on_health_component_health_depleted() -> void:
 	state_machine.transition_to("Dead")
 	died.emit()
+	state_machine.active = false
+	is_dead = true
