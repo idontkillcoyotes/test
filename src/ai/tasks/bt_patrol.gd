@@ -2,7 +2,7 @@ class_name BTPatrol
 extends BTAction
 
 const PATROL_RADIUS: float = 100.0
-const NEAR_DISTANCE: float = 25
+const NEAR_DISTANCE: float = 25.0
 const MAX_TIME_PATROL: float = 3.0
 
 var _target: Vector2 = Vector2.ZERO

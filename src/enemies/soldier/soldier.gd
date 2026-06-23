@@ -3,10 +3,10 @@ extends CharacterBody2D
 
 const NAV_TARGET_DESIRED_DISTANCE : float = 20.0
 
-@export var move_speed : float = 200
-@export var attack_range : float = 50
+@export var move_speed : float = 200.0
+@export var attack_range : float = 50.0
 @export_range(0.0,5.0) var attack_cooldown : float = 1.5
-@export var detection_range : float = 200
+@export var detection_range : float = 200.0
 
 @onready var weapon: Node2D = $Weapon
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D

@@ -1,6 +1,6 @@
 extends State
 
-@export var move_speed := 200.0
+@export var move_speed : float = 200.0
 
 func enter() -> void:
 	animator.play("run")

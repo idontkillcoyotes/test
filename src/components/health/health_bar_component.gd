@@ -9,5 +9,6 @@ func _ready() -> void:
 		value = max_value
 		health_component.health_changed.connect(_on_health_changed)
 
-func _on_health_changed(new_value) -> void:
+func _on_health_changed(new_value: float) -> void:
 	value = new_value
+	

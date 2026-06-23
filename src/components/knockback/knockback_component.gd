@@ -29,7 +29,7 @@ func _on_hit_received(instance:DamageInstance) -> void:
 func _physics_process(delta: float) -> void:
 	apply(delta)
 
-func apply(delta) -> void:
+func apply(delta: float) -> void:
 	if character == null:
 		return
 	

@@ -13,5 +13,8 @@ func get_damage() -> int:
 
 func _to_string() -> String:
 	var s:= "DamageInstance: "
-	s+="(%d)/(%.2f)[%s]"%[damage,knockback_force,source.name]
+	if source != null:
+		s+="(%d)/(%.2f)[%s]"%[damage,knockback_force,source.name]
+	else:
+		s+="(%d)/(%.2f)"%[damage,knockback_force]
 	return s
