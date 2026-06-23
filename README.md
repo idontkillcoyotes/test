@@ -9,8 +9,8 @@
 
 ## Cómo abrir el proyecto
 1. Clonar el repositorio
-2. Abrir Godot 4.6.2 e importar desde la carpeta raíz
-3. Ejecutar la escena `main.tscn` o presionar F5 para correr el test
+2. Abrir Godot 4.6.2 e importar el proyecto
+3. Ejecutar la escena `main.tscn` o presionar **F5** para correr la escena principal
 
 ## Arquitectura
 El player usa una **FSM basada en nodos** con estados: Idle, Run, 
